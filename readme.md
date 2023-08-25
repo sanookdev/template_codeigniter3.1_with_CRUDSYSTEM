@@ -1,23 +1,21 @@
 # What is this?
 
 > This is Codeigniter 3 template using AdminLTE 3
-> 
-> Bottom text
+> This project for "Video Course Project", I custom from  [license agreement](https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst)
 
-## What is inside?
+## This project can ...
 
-1. Codeigniter 3
-2. AdminLTE 3 (Bootstrap 4) - clone template.php to use
-3. No `index.php` on URI + the `.htaccess`
-4. Helper 'url' is ON
-5. Custom 404 page
-6. Login page
+1. Users Management
+2. Title and Video course Management
+3. Set user permission to access title
+4. Set menu color, site name, sub name, Banner image, Background for Login page
 
 ## How to Use
 
 1. Download ZIP / clone this repo.
 2. Set this project up
 3. Check Codeigniter's [User Guide](https://codeigniter.com/docs) for detailed setup & more info
+4. Import database such as database_defaults.sql
 
 ## Setup
 
@@ -47,6 +45,8 @@ You can find a list of all changes for each release in the [user guide change lo
 PHP version 5.6 or newer is recommended.
 
 It should work on 5.3.7 as well, but we strongly advise you NOT to run such old versions of PHP, because of potential security and performance issues, as well as missing features.
+
+... Warning :: this project can't use with PHP 8.x version.
 
 ## Installation
 
