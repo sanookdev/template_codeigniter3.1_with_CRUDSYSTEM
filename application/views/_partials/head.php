@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <head>
     <link rel="shortcut icon" href="<?= base_url($this->config->item('favicon')); ?>" type="image/x-icon">
 
-    <title><?= $this->config->item('site_name') ?></title>
+    <title><?= $options->website_name ?></title>
 
     <div id="overlay">
         <div id="loading">
@@ -21,7 +21,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body>
     <script>
     $(document).ready(() => {
-        $('#overlay').show()
+        const options = <?= json_encode($options);?>;
+        const users_session = <?= json_encode($this->session->userdata);?>
+
+        console.log(options);
+        console.log(users_session);
         showOverlay = () => {
             $('#overlay').show();
         }

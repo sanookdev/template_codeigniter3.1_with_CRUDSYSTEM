@@ -23,7 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/video_course_sex_prod2023/';
+
+$config['base_url'] = 'http://localhost/template_codeigniter3.1_with_CRUDSYSTEM';
 
 $config['site_name'] = "SEXology videos";
 

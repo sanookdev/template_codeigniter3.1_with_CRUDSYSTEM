@@ -29,9 +29,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#"><?= $this->config->item('users_menu');?></a>
+                                <li class="breadcrumb-item"><a href="#">Videos Contents</a>
                                 </li>
-                                <li class="breadcrumb-item active">Users</li>
+                                <li class="breadcrumb-item active">Title</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -44,97 +44,71 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">User Management</h3>
+                                    <h3 class="card-title">Videos Management </h3>
                                     <div class="card-tools">
-                                        <a href="<?= site_url('users/add')?>" class="text-success">
-                                            <i class="fas fa-plus"></i> Add User
+                                        <a href="<?= site_url('videos/addvideo')?>" class="text-success">
+                                            <i class="fas fa-plus"></i> Add Video
                                         </a>
                                     </div>
                                 </div>
                                 <div class="card-body">
+
                                     <a type="button" class="btn btn-danger float-left delete_all">Delete
                                         Selected</a>
 
-                                    <table class="table table-bordered table-hover users_tb ">
-                                        <thead>
-                                            <tr class="text-center bg-secondary">
-                                                <th width="3%"><input type="checkbox" id="master"></th>
-                                                <th width="10%">Created</th>
-                                                <th>Fullname</th>
-                                                <th>Email</th>
-                                                <th>Password</th>
-                                                <th>Mobile</th>
-                                                <th width="5%">Active</th>
-                                                <th width="5%">Admin</th>
-                                                <!-- <th width="10%">#</th> -->
-                                                <th width="5%" class="pull-right">#</th>
+                                    <table class="table table-bordered table-hover videos_tb">
+                                        <thead class="text-center bg-secondary">
+                                            <tr>
+                                                <th width="3%"><input type="checkbox" id="master" disabled></th>
+                                                <th width="5%">V_ID</th>
+                                                <th>NAME</th>
+                                                <th width="10%">Filename</th>
+                                                <th width="7%">Updated</th>
+                                                <th width="5%">Status</th>
+                                                <th width="10%">#</th>
                                             </tr>
                                         </thead>
                                         <tbody class="data">
                                             <?$i = 1;
-                                            foreach ($users as $key => $value) {?>
-                                            <tr>
+                                            foreach ($videos as $key => $value) {?>
+                                            <tr class="text-center">
                                                 <td>
-                                                    <input type="checkbox" class="sub_chk"
-                                                        data-id="<?= $value->username;?>">
+                                                    <input type="checkbox" disabled class="sub_chk"
+                                                        data-id="<?= $value->id;?>">
                                                 </td>
-                                                <td><?= $value->created;?></td>
-                                                <td><?= $value->fname . " " . $value->lname ;?></td>
-                                                <td><?= $value->username;?></td>
+                                                <td><?= $value->id;?></td>
+                                                <td><?= $value->name."<br><p class = 'text-small text-info'>course : ".$value->title_name."</p>";?>
+                                                </td>
+                                                <td><?= $value->filename;?></td>
+                                                <td><?= $value->last_updated;?></td>
+                                                <td>
+                                                    <div class="custom-control custom-switch">
+                                                        <input
+                                                            onclick="changePublic(this,'<?= $value->id?>','tb_videos','status')"
+                                                            type="checkbox" class="custom-control-input"
+                                                            id="<?= 'status'.$i ;?>" name='machine_state'
+                                                            <?= ($value->status) ? "checked" : ""?>>
+                                                        <label class="custom-control-label" for="<?= 'status'.$i ;?>">
+                                                        </label>
+                                                    </div>
+                                                    <input type="hidden" name="form_submit" value="">
+                                                </td>
                                                 <td>
 
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-block btn-info edit_data"
-                                                        onclick="resetPasswordUser('<?= $value->username?>','<?= $value->phone?>')">
-                                                        <i class="fas fa-undo"></i>
-                                                        Reset password
-                                                    </button>
-                                                    <p class="small text-center" style="opacity:0.8">Default password is
-                                                        mobile no.</p>
-                                                </td>
-                                                <td><?= $value->phone;?></td>
-                                                <td>
-                                                    <div class="custom-control custom-switch">
-                                                        <input
-                                                            onclick="changePublic(this,'<?= $value->username?>','user','status_active')"
-                                                            type="checkbox" class="custom-control-input"
-                                                            id="<?= 'status_active'.$i ;?>" name='machine_state'
-                                                            <?= ($value->status_active) ? "checked" : ""?>>
-                                                        <label class="custom-control-label"
-                                                            for="<?= 'status_active'.$i ;?>">
-                                                        </label>
-                                                    </div>
-                                                    <input type="hidden" name="form_submit" value="">
-                                                </td>
-                                                <td>
-                                                    <div class="custom-control custom-switch">
-                                                        <input
-                                                            onclick="changePublic(this,'<?= $value->username?>','user','user_role')"
-                                                            type="checkbox" class="custom-control-input"
-                                                            id="<?= 'user_role'.$i ;?>" name='machine_state2'
-                                                            <?= ($value->user_role == '1') ? "checked" : ""?>>
-                                                        <label class="custom-control-label"
-                                                            for="<?= 'user_role'.$i ;?>">
-                                                        </label>
-                                                    </div>
-                                                    <input type="hidden" name="form_submit" value="">
-                                                </td>
-                                                <td>
-                                                    <a class="btn btn-danger" targetDiv=""
-                                                        data-id="<?= $value->username?>"
-                                                        onclick="deleteUser('<?= $value->username ;?>')"><i
+                                                    <a class="btn btn-danger" targetDiv="" data-id="<?= $value->id?>"
+                                                        onclick="deleteVideo('<?= $value->id ;?>','<?= $value->title_id;?>','<?= $value->filename;?>')"><i
                                                             class="fas fa-trash"></i></a>
                                                 </td>
                                             </tr>
                                             <?$i++;
                                         }?>
+
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div><!-- /.container-fluid -->
             </section>
         </div>
@@ -142,8 +116,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         <script type="text/javascript">
         $(document).ready(function() {
+
+            const list_video = <?= json_encode($videos);?>;
+
             setupDataTable = () => {
-                $('.users_tb').DataTable({
+                $('.videos_tb').DataTable({
                     "paging": true,
                     "lengthChange": false,
                     "ordering": true,
@@ -155,23 +132,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             initialLoad = async () => {
                 await setupDataTable();
-                await hideOverlay();
+                // await hideOverlay();
             }
             initialLoad();
 
+
+            showVideo = (title_id, v_id) => {
+                console.log(title_id, v_id);
+            }
+
             changePublic = (e, id, target, column) => {
-                let where = "id=" + id;
-                let table = target;
                 let data = {};
-                data['username'] = id;
+                data['id'] = id;
                 data['column'] = column;
+                data['table'] = target;
                 if ($(e).is(":checked")) {
                     data[column] = 1;
                 } else {
-                    (column != 'user_role') ? data[column] = 0: data[column] = 2;
+                    data[column] = 0;
                 }
                 let baseUrl = "<?= base_url();?>";
-                let submissionURL = baseUrl + 'Users/updateStatus';
+                let submissionURL = baseUrl + 'Admin/updateStatus';
                 $.ajax({
                     method: 'POST',
                     type: 'POST',
@@ -189,49 +170,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     }
                 });
             }
-
-            resetPasswordUser = (username, phone) => {
-                alertify.confirm("Are you sure for reset password account '" + username + "' ?",
-                    function() {
-                        let data = {};
-                        data['username'] = username;
-                        data['phone'] = phone;
-                        var baseUrl = "<?= base_url();?>";
-                        var submissionURL = baseUrl + 'Users/resetPasswordUser';
-                        $.ajax({
-                            type: "POST",
-                            url: submissionURL,
-                            method: 'POST',
-                            dataType: 'json',
-                            data: {
-                                data
-                            },
-                            success: function(res) {
-                                if (res.status) {
-                                    alertify
-                                        .alert(res.message,
-                                            function() {
-                                                location.reload();
-                                            });
-                                } else {
-                                    alertify.error(res.message);
-                                }
-                            },
-                        });
-                    },
-                    function() {
-                        alertify.error('Cancel');
-                    });
-            }
-
-
-            deleteUser = (username) => {
+            deleteVideo = (video_id, title_id, filename) => {
                 let data = {};
-                alertify.confirm("Are you sure for delete account '" + username + "' ?",
+                alertify.confirm("Are you sure for delete video id : '" + video_id + "' ?",
                     function() {
-                        data['username'] = username;
-                        var baseUrl = "<?= base_url();?>";
-                        var submissionURL = baseUrl + 'Users/deleteUser';
+                        data['id'] = video_id;
+                        data['title_id'] = title_id;
+                        data['filename'] = filename;
+                        let baseUrl = "<?= base_url();?>";
+                        let submissionURL = baseUrl + 'Admin/deleteVideo';
                         $.ajax({
                             type: "POST",
                             url: submissionURL,
@@ -279,11 +226,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     alertify.confirm(WRN_PROFILE_DELETE,
                         function() {
                             var baseUrl = "<?= base_url();?>";
-                            var submissionURL = baseUrl + 'Users/deleteMultipleUser';
+                            var submissionURL = baseUrl + 'Admin/deleteMultiple';
                             let dataSelected = [];
                             $.each(allVals, function(index, value) {
                                 dataSelected.push(value);
-                                //   $('table tr').filter("[data-row-id='" + value + "']").remove();
                             });
                             $.ajax({
                                 method: 'POST',
@@ -291,7 +237,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 dataType: 'json',
                                 url: submissionURL,
                                 data: {
-                                    data: dataSelected
+                                    data: dataSelected,
+                                    table: 'tb_videos'
                                 },
                                 success: function(res) {
                                     if (res.status) {

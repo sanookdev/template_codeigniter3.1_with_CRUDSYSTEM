@@ -6,53 +6,67 @@ class Users extends CI_Controller
     public function __construct(){
 		parent::__construct();
 		if(isset($this->session->userdata['user_role'])){
-			if($this->session->userdata['user_role'] == '1'){
-				$this->load->model('User_model');
-			}
+			$this->load->model('User_model');
+			$this->load->model('Video_model');
+			$this->load->model('Setting_model');
+			$this->title =  $this->Video_model->fetchTitle();
+			$this->options = $this->Setting_model->get_options();
 		}else{
 			redirect('member');
 		}
 	}
 	public function report($response = null)
 	{
-		$this->load->model('Setting_model');
-        $data['users'] = $this->User_model->fetchAll();
-        $data['options'] = $this->Setting_model->get_options();
-		if($response != null){
-			$data['response'] = $response ;
+		if($this->session->userdata['user_role'] == '1'){
+			$data['users'] = $this->User_model->fetchAll();
+			$data['options'] = $this->options;
+			$data['titles'] = $this->title;
+			$this->load->view('myCss');
+			$this->load->view('myJs');
+			$this->load->view('_partials/head' , $data);
+			$this->load->view('_partials/navbar');
+			$this->load->view('_partials/sidebar_main');
+			$this->load->view('user/report');
+			$this->load->view('_partials/sidebar_control');
+			$this->load->view('_partials/footer');
+		}else{
+			redirect('dashboard');
 		}
-		$this->load->view('myCss');
-		$this->load->view('myJs');
-		$this->load->view('_partials/head');
-		$this->load->view('_partials/navbar');
-		$this->load->view('_partials/sidebar_main');
-		$this->load->view('user/report' , $data);
-		$this->load->view('modal_event/reset_pass' , $data);
-		$this->load->view('_partials/sidebar_control');
-		$this->load->view('_partials/footer');
 	}
 	public function add()
 	{
-		$this->load->view('myCss');
-		$this->load->view('myJs');
-		$this->load->view('_partials/head');
-		$this->load->view('_partials/navbar');
-		$this->load->view('_partials/sidebar_main');
-		$this->load->view('user/add');
-		$this->load->view('_partials/sidebar_control');
-		$this->load->view('_partials/footer');
+		if($this->session->userdata['user_role'] == '1'){
+			$data['options'] = $this->options;
+			$data['titles'] = $this->title;
+			$this->load->view('myCss');
+			$this->load->view('myJs');
+			$this->load->view('_partials/head', $data);
+			$this->load->view('_partials/navbar');
+			$this->load->view('_partials/sidebar_main' );
+			$this->load->view('user/add');
+			$this->load->view('_partials/sidebar_control');
+			$this->load->view('_partials/footer');
+		}else{
+			redirect('dashboard');
+		}
 	}
 
 	public function uploadPage()
 	{
-		$this->load->view('myCss');
-		$this->load->view('myJs');
-		$this->load->view('_partials/head');
-		$this->load->view('_partials/navbar');
-		$this->load->view('_partials/sidebar_main');
-		$this->load->view('user/import');
-		$this->load->view('_partials/sidebar_control');
-		$this->load->view('_partials/footer');
+		if($this->session->userdata['user_role'] == '1'){
+			$data['options'] = $this->options;
+			$data['titles'] = $this->title;
+			$this->load->view('myCss');
+			$this->load->view('myJs');
+			$this->load->view('_partials/head', $data);
+			$this->load->view('_partials/navbar');
+			$this->load->view('_partials/sidebar_main' );
+			$this->load->view('user/import');
+			$this->load->view('_partials/sidebar_control');
+			$this->load->view('_partials/footer');
+		}else{
+			redirect('dashboard');
+		}
 	}
 
 	public function create()
@@ -64,8 +78,8 @@ class Users extends CI_Controller
 			'status' => 0
 		);
 		if($this->User_model->checkDuplicate($username)){
-			$res['message'] = 'This email has already exit. !';
-			$res['status'] = 0;
+			$this->session->set_flashdata('err_message', $username.'<br> This email has already exit. !');
+			$this->session->set_flashdata('status', 1);
 		}else{
 			if($this->User_model->create($this->input->post())){
 				$this->session->set_flashdata('err_message', 'This email has been created.');
@@ -75,7 +89,6 @@ class Users extends CI_Controller
 				$this->session->set_flashdata('status', 1);
 			}
 		}
-
 		$this->add();
 	}
 
@@ -103,17 +116,31 @@ class Users extends CI_Controller
 		$data = $this->input->post('data');
 		$username = $data['username'];
 		$dataUpdate = array(
-			'password' => md5(md5($data['password']))
+			'password' => md5($data['password'])
 		);
 		if($this->User_model->updatePassword($username,$dataUpdate)){
 			$result['message'] = "Password updated.";
 			$result['status'] = '1';
         }else{
-			$result['message'] = "Fail : ". $this->User_model->updateStatus($username,$dataUpdate);
+			$result['message'] = "Fail : ". $this->User_model->updatePassword($username,$dataUpdate);
 			$result['status'] = '0';
 		}
 		echo json_encode($result);
     }
+
+	public function resetPasswordUser(){
+		$data = $this->input->post('data');
+		$username = $data['username'];
+		$phone = $data['phone'];
+		if($this->User_model->resetPasswordUser($username,$phone)){
+			$result['message'] = "Password was reset.";
+			$result['status'] = '1';
+		}else{
+			$result['message'] = "Something went wrong !. : ". $this->User_model->resetPasswordUser($username,$phone);
+			$result['status'] = '0';
+		}
+		echo json_encode($result);
+	}
 	
 	public function deleteUser(){
 

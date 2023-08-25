@@ -31,6 +31,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="<?= site_url('dashboard');?>">Dashboard</a></li>
                             </ol>
+
+
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
@@ -38,10 +40,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <!-- /.content-header -->
             <section class="content">
                 <div class="container-fluid">
+                    <? if($this->session->userdata['user_role'] == '1'){?>
                     <div class="row">
-                        <div class="col-sm-4">
-                            <? $this->load->view('_partials/calendar'); ?>
-                        </div>
                         <div class="col-sm-4">
                             <div class="small-box" style="background-color:rgb(245, 105, 84);">
                                 <div class="inner">
@@ -51,10 +51,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class="icon">
                                     <i class="fas fa-video"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">
+                                <a href="<?= site_url('videos/list_manage');?>" class="small-box-footer">
                                     More info <i class="fas fa-arrow-circle-right"></i>
                                 </a>
                             </div>
+
+                        </div>
+                        <div class="col-sm-4">
                             <div class="small-box bg-gradient-info">
                                 <div class="inner">
                                     <h3><?= $countUsers;?></h3>
@@ -69,6 +72,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </div>
                     </div>
+                    <?}?>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">

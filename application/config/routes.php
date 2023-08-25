@@ -57,6 +57,7 @@ $route['default_controller'] = 'Main/dashboard';
 //  ---------------------------    USERS MANAGEMENT    -------------------------------
 
 $route['users'] = 'Users/report';
+$route['users/add'] = 'Users/add';
 $route['login'] = 'auth';
 $route['users/upload'] = 'Users/uploadPage';
 $route['dashboard'] = 'Main/dashboard';
@@ -67,19 +68,28 @@ $route['dashboard'] = 'Main/dashboard';
 
 //  ---------------------------    VIDEOS MANAGEMENT    -------------------------------
 $route['video'] = 'Videos/all';
-$route['video/title'] = 'Videos/title';
 $route['video/users'] = 'Videos/users';
+$route['videos/play/(:any)'] = 'Videos/play/$1';
 //  ---------------------------    VIDEOS MANAGEMENT (END)    -------------------------------
 
 
-//  ---------------------------    VIDEOS MANAGEMENT    -------------------------------
+//  ---------------------------    ADMIN MANAGEMENT    -------------------------------
 $route['setting'] = 'setting';
-$route['video/title'] = 'Videos/listTitle';
+$route['videos/title_manage'] = 'Admin/list_title';
+$route['videos/addtitle'] = 'Admin/addTitle';
+$route['videos/list_manage'] = 'Admin/list_video';
+$route['videos/addvideo'] = 'Admin/addVideo';
+$route['videos/title_manage_details/(:any)'] = 'Admin/title_manage_details/$1';
 // $route['video/users'] = 'Videos/users';
-//  ---------------------------    VIDEOS MANAGEMENT (END)    -------------------------------
+//  ---------------------------    ADMIN MANAGEMENT (END)    -------------------------------
+
+// ---------------------------- FOR SHOW VIDEOS ----------------------------------
+$route['videos/subject/(:any)'] = 'Videos/subject/$1';
+// ---------------------------- FOR SHOW VIDEOS (END) ----------------------------------
 
 
-// ----------------------------    UPLOAD MANAGEMENT    ----------------------------
+
+// ----------------------------    UPLOAD MANAGEMENT    ---------------------------- titles
 $route['upload/upload_image'] = 'upload/upload_image';
 $route['upload/remove_image/(:any)'] = 'upload/remove_image/$1';
 
