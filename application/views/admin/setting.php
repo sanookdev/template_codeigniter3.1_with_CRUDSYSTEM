@@ -61,6 +61,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                     placeholder="Your website sub name."
                                                     value="<?= $options->sub_name ;?>" required>
                                             </div>
+                                            <div class="col-md-4">
+                                                <label for="lecturer">Lecturer</label>
+                                                <input type="text" class="form-control form-control-sm" name="lecturer"
+                                                    placeholder="Your lecturer name."
+                                                    value="<?= ($options->lecturer != '') ? $options->lecturer : "" ;?>"
+                                                    required>
+                                            </div>
                                             <div class="col-md-2">
                                                 <label for="menu_color">Menu Color
                                                     <span class="badge preview_color"
@@ -71,6 +78,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                     class="form-control form-control-sm"
                                                     value="<?= $options->menu_color;?>" type="text" />
                                             </div>
+
                                         </div>
                                         <div class="form-row mt-2">
                                             <div class="col-md-12 text-right">

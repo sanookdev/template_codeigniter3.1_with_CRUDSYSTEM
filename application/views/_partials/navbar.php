@@ -20,8 +20,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="<?= site_url('dashboard');?>" class="nav-link">Dashboard</a>
-                <a href="#" class="nav-link"> โดย รศ.นพ.อติวุทธ กมุทมาศ ( ภาควิชาสาขา :
-                    สูติศาสตร์-นารีเวชวิทยา )</a>
+                <a href="#" class="nav-link">
+                    <?= $options->lecturer != '' ? $options->lecturer : $options->sub_name ;?></a>
             </li>
 
 

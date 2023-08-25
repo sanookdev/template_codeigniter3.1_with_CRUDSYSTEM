@@ -35,6 +35,7 @@ DROP TABLE IF EXISTS `tb_options`;
 CREATE TABLE `tb_options` (
   `website_name` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   `sub_name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `lecturer` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `banner_img1` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `banner_img2` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `menu_color` varchar(255) DEFAULT '#17a2b8',
