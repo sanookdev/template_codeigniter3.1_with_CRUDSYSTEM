@@ -130,12 +130,10 @@ $(document).ready(function() {
     const aLink = $('a[href^="' + url + '"]');
     const title_id = <?= (isset($title)) ? json_encode($title[0]->id) : '"none"' ;?>;
     if (page == 'play') {
-
+        console.log(page);
         let test = <?= json_encode(base_url('videos/subject/'));?> + title_id;
 
         $('a[href^="' + test + '"]').addClass('active');
-    } else {
-
     }
     checkActivePage = async () => {
         await clearActive();
@@ -149,7 +147,7 @@ $(document).ready(function() {
         }
     }
     addActivePage = () => {
-        aLink.addClass('active');
+        action != '' ? aLink.addClass('active') : '';
         if (action == 'setting') {
             $('#nav-setting').addClass('setting_active');
         }
@@ -178,6 +176,7 @@ $(document).ready(function() {
     }
 
     initialLoadSidebar = () => {
+        console.log(1);
         checkActivePage();
     }
 

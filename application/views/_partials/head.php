@@ -21,7 +21,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body>
     <script>
     $(document).ready(() => {
-        const options = <?= json_encode($options);?>;
+        const options = <?= json_encode(isset($options) ? $options : '');?>;
         const users_session = <?= json_encode($this->session->userdata);?>
 
         console.log(options);
